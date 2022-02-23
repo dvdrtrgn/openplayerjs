@@ -4,6 +4,7 @@ ts-dist/
 .idea/
 coverage/
 .history/
+.out-tsc/
 .DS_Store
 .nyc_output
 .coveralls.yml

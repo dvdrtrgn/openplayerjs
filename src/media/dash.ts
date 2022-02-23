@@ -1,14 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { EventsList, Level, Source } from '../interfaces';
 import { HAS_MSE } from '../utils/constants';
 import { addEvent, loadScript } from '../utils/general';
 import { isDashSource } from '../utils/media';
 import Native from './native';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const dashjs: any;
 
 class DashMedia extends Native {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     #player: any;
 
     // @see http://cdn.dashjs.org/latest/jsdoc/MediaPlayerEvents.html
@@ -22,25 +21,11 @@ class DashMedia extends Native {
 
         this._assign = this._assign.bind(this);
         this._preparePlayer = this._preparePlayer.bind(this);
-
-        this.promise =
-            typeof dashjs === 'undefined'
-                ? // Ever-green script
-                  loadScript('https://cdn.dashjs.org/latest/dash.all.min.js')
-                : new Promise((resolve) => {
-                      resolve({});
-                  });
-
-        this.promise.then(() => {
-            this.#player = dashjs.MediaPlayer().create();
-            this.instance = this.#player;
-        });
-
         return this;
     }
 
     canPlayType(mimeType: string): boolean {
-        return HAS_MSE && mimeType === 'application/dash+xml';
+        return HAS_MSE() && mimeType === 'application/dash+xml';
     }
 
     load(): void {
@@ -133,7 +118,13 @@ class DashMedia extends Native {
         }
     }
 
-    private _preparePlayer(): void {
+    private async _preparePlayer(): Promise<void> {
+        if (typeof window !== 'undefined' && typeof (window as any).dashjs === 'undefined') {
+            await loadScript('https://cdn.dashjs.org/latest/dash.all.min.js');
+        }
+
+        this.#player = dashjs.MediaPlayer().create();
+        this.instance = this.#player;
         this.#player.updateSettings({
             debug: {
                 logLevel: dashjs.Debug.LOG_LEVEL_NONE,

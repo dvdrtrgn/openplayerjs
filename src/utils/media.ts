@@ -11,7 +11,10 @@ export function getExtension(url: string): string {
 }
 
 export function isHlsSource(media: Source): boolean {
-    return /\.m3u8$/i.test(media.src) || ['application/x-mpegURL', 'application/vnd.apple.mpegurl'].indexOf(media.type) > -1;
+    return (
+        /\.m3u8$/i.test(media.src) ||
+        ['application/x-mpegURL', 'application/vnd.apple.mpegurl'].indexOf(media.type) > -1
+    );
 }
 
 export function isM3USource(media: Source): boolean {

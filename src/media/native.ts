@@ -5,7 +5,7 @@ abstract class Native {
 
     media: Source;
 
-    promise: Promise<unknown>;
+    promise: Promise<void>;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     #customPlayer: any;

@@ -37,7 +37,7 @@ export const IS_SAFARI = UA ? /safari/i.test(UA) && !IS_CHROME : false;
 
 export const IS_STOCK_ANDROID = UA ? /^mozilla\/\d+\.\d+\s\(linux;\su;/i.test(UA) : false;
 
-export const HAS_MSE = typeof window !== 'undefined' ? 'MediaSource' in window : false;
+export const HAS_MSE = (): boolean => (typeof window !== 'undefined' ? 'MediaSource' in window : false);
 
 // @see https://github.com/video-dev/hls.js/blob/master/src/is-supported.js
 export const SUPPORTS_HLS = (): boolean => {
