@@ -47,7 +47,8 @@
     "create-esm": "[ -d ./dist/esm ] && rm -R ./dist/esm; tsc -p tsconfig-esm.json",
     "release": "npm run build && release-it",
     "test": "npm run test:sources -- --coverage && tsd",
-    "test:sources": "jest"
+    "test:sources": "jest",
+    "test:changes": "jest -o"
   },
   "readme": "https://github.com/openplayerjs/openplayerjs/blob/master/README.md",
   "devDependencies": {

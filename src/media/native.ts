@@ -3,14 +3,14 @@ import { Level, Source } from '../interfaces';
 abstract class Native {
     element: HTMLMediaElement;
 
-    media: Source;
+    media?: Source;
 
     promise: Promise<void>;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     #customPlayer: any;
 
-    constructor(element: HTMLMediaElement, media: Source) {
+    constructor(element: HTMLMediaElement, media?: Source) {
         this.element = element;
         this.media = media;
         this.promise = new Promise<void>((resolve) => {

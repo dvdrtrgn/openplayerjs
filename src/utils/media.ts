@@ -117,3 +117,35 @@ export function isAutoplaySupported(
         callback();
     }
 }
+
+export function getMediaFiles(element: HTMLMediaElement): Source[] {
+    const mediaFiles = [];
+    const sourceTags = element.querySelectorAll('source');
+    const nodeSource = element.src;
+
+    // Consider if node contains the `src` and `type` attributes
+    if (nodeSource) {
+        mediaFiles.push({
+            src: nodeSource,
+            type: element.getAttribute('type') || predictMimeType(nodeSource, element),
+        });
+    }
+
+    // test <source> types to see if they are usable
+    sourceTags.forEach((item) => {
+        const { src } = item;
+        mediaFiles.push({
+            src,
+            type: item.getAttribute('type') || predictMimeType(src, element),
+        });
+    });
+
+    if (!mediaFiles.length) {
+        mediaFiles.push({
+            src: '',
+            type: predictMimeType('', element),
+        });
+    }
+
+    return mediaFiles;
+}

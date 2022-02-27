@@ -3,7 +3,7 @@ import path from 'path';
 
 const config: Config.InitialOptions = {
     testEnvironment: 'jsdom',
-    collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+    collectCoverageFrom: ['<rootDir>/src/**/*.ts', '!<rootDir>/src/interfaces.ts'],
     coverageReporters: ['lcov', 'text'],
     moduleDirectories: ['node_modules', path.join(__dirname, 'src')],
     testMatch: ['<rootDir>/tests/**/*.spec.ts'],

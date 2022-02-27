@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import '@testing-library/jest-dom';
+import fs from 'fs';
 import DashMedia from 'media/dash';
+import path from 'path';
 
 describe('media > dash', (): void => {
     let dash: DashMedia;
@@ -13,13 +15,13 @@ describe('media > dash', (): void => {
                 addEventListener: jest.fn(),
             })),
         });
+
+        const html = fs.readFileSync(path.resolve(__dirname, '../player.html'), 'utf-8');
+        document.documentElement.innerHTML = html.toString();
     });
 
     beforeEach(() => {
-        dash = new DashMedia(document.getElementById('video') as HTMLMediaElement, {
-            type: 'application/dash+xml',
-            src: 'https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd',
-        });
+        dash = new DashMedia(document.getElementById('video') as HTMLMediaElement);
     });
 
     afterEach(() => {

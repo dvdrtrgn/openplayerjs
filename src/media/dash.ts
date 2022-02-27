@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EventsList, Level, Source } from '../interfaces';
-import { HAS_MSE } from '../utils/constants';
-import { addEvent, loadScript } from '../utils/general';
-import { isDashSource } from '../utils/media';
+import { EventsList, Level, Source } from 'interfaces';
+import { HAS_MSE } from 'utils/constants';
+import { addEvent, loadScript } from 'utils/general';
+import { getMediaFiles, isDashSource } from 'utils/media';
 import Native from './native';
 
 declare const dashjs: any;
@@ -15,8 +15,8 @@ class DashMedia extends Native {
 
     #options?: unknown = {};
 
-    constructor(element: HTMLMediaElement, mediaSource: Source, options?: unknown) {
-        super(element, mediaSource);
+    constructor(element: HTMLMediaElement, media?: Source, options?: unknown) {
+        super(element, media);
         this.#options = options;
 
         this._assign = this._assign.bind(this);
@@ -30,7 +30,9 @@ class DashMedia extends Native {
 
     load(): void {
         this._preparePlayer();
-        this.#player.attachSource(this.media.src);
+        const sources = getMediaFiles(this.element);
+        const url = this.media?.src || sources[0].src;
+        this.#player.attachSource(url);
 
         const e = addEvent('loadedmetadata');
         this.element.dispatchEvent(e);
