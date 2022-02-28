@@ -28,8 +28,10 @@ class DashMedia extends Native {
         return HAS_MSE() && mimeType === 'application/dash+xml';
     }
 
-    load(): void {
-        this._preparePlayer();
+    async load(): Promise<void> {
+        if (!this.#player) {
+            await this._preparePlayer();
+        }
         const sources = getMediaFiles(this.element);
         const url = this.media?.src || sources[0].src;
         this.#player.attachSource(url);

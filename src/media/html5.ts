@@ -47,8 +47,11 @@ class HTML5Media extends Native {
         return !!this.element.canPlayType(mimeType).replace('no', '');
     }
 
-    load(): void {
-        this.element.load();
+    async load(): Promise<void> {
+        return new Promise<void>((resolve) => {
+            this.element.load();
+            resolve();
+        });
     }
 
     destroy(): HTML5Media {

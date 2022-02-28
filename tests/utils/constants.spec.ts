@@ -55,6 +55,25 @@ describe('utils > constants', () => {
         expect(constants.IS_IPHONE()).toEqual(true);
     });
 
+    test('must detect whether a device is a mobile device or not', () => {
+        // Mock user agent
+        Object.defineProperty(navigator, 'maxTouchPoints', {
+            writable: true,
+            value: true,
+        });
+        expect(constants.IS_MOBILE()).toEqual(true);
+
+        Object.defineProperty(navigator, 'maxTouchPoints', {
+            writable: true,
+            value: false,
+        });
+        Object.defineProperty(navigator, 'msMaxTouchPoints', {
+            writable: true,
+            value: true,
+        });
+        expect(constants.IS_MOBILE()).toEqual(true);
+    });
+
     test('must check if browser has MSE support', () => {
         expect(constants.HAS_MSE()).toEqual(true);
     });

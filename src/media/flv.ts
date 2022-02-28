@@ -30,9 +30,9 @@ class FlvMedia extends Native {
         return HAS_MSE() && (mimeType === 'video/x-flv' || mimeType === 'video/flv');
     }
 
-    load(): void {
+    async load(): Promise<void> {
         if (!this.#player) {
-            this._preparePlayer();
+            await this._preparePlayer();
         }
         this.#player.unload();
         this.#player.detachMediaElement();

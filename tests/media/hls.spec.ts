@@ -21,10 +21,7 @@ describe('media > hls', (): void => {
     });
 
     beforeEach(() => {
-        hls = new HlsMedia(document.getElementById('video') as HTMLMediaElement, {
-            type: 'application/x-mpegURL',
-            src: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
-        });
+        hls = new HlsMedia(document.getElementById('video') as HTMLMediaElement);
     });
 
     afterEach(() => {

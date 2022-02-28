@@ -22,10 +22,7 @@ describe('media > flv', (): void => {
     });
 
     beforeEach(() => {
-        flv = new FlvMedia(document.getElementById('video') as HTMLMediaElement, {
-            type: 'video/x-flv',
-            src: 'http://flv.bdplay.nodemedia.cn/live/bbb.flv',
-        });
+        flv = new FlvMedia(document.getElementById('video') as HTMLMediaElement);
     });
 
     afterEach(() => {

@@ -20,7 +20,7 @@ abstract class Native {
 
     abstract canPlayType(mimeType: string): boolean;
 
-    abstract load(): void;
+    abstract load(): Promise<void>;
 
     abstract destroy(): void;
 

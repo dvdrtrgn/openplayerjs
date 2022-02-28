@@ -37,9 +37,9 @@ class HlsMedia extends Native {
         return SUPPORTS_HLS() && (mimeType === 'application/x-mpegURL' || mimeType === 'application/vnd.apple.mpegurl');
     }
 
-    load(): void {
+    async load(): Promise<void> {
         if (!this.#player) {
-            this._preparePlayer();
+            await this._preparePlayer();
         }
         const sources = getMediaFiles(this.element);
         this.#player.detachMedia();
@@ -82,7 +82,11 @@ class HlsMedia extends Native {
         if (isHlsSource(media)) {
             this.destroy();
             this.#player = new Hls(this.#options);
-            this.#player.loadSource(media.src);
+
+            const sources = getMediaFiles(this.element);
+            const url = this.media?.src || sources[0].src;
+
+            this.#player.loadSource(url);
             this.#player.attachMedia(this.element);
 
             this.#events = Hls.Events;
